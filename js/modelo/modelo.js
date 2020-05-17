@@ -10,7 +10,6 @@ var Modelo = function () {
   this.preguntaAgregada = new Evento(this);
   this.preguntaEliminada = new Evento(this);
   this.preguntaActualizada = new Evento(this);
-  this.borrarPreguntas = new Evento(this);
 };
 
 Modelo.prototype = {
@@ -51,19 +50,24 @@ Modelo.prototype = {
   borrarTodasPreguntas: function() {
     this.preguntas = [];
     this.guardar();
-    this.borrarPreguntas.notificar();
+    this.preguntaEliminada.notificar();
   },
 
-  votarPregunta: function (id, opcion) {
+  agregarVoto: function (id, nombrePregunta, respuestaSeleccionada) {
     let index = this.obtenerIndicePregunta(id)
     if (index != -1) {
-      this.preguntas[index].respuestas //! sin terminar
+      for (let i = 0; i < this.preguntas[index].cantidadPorRespuesta.length; i++){
+        if (this.preguntas[index].cantidadPorRespuesta[i].textoRespuesta == respuestaSeleccionada){
+          this.preguntas[index].cantidadPorRespuesta[i].cantidad++;
+        }
+      }
     }
+    this.preguntaActualizada.notificar();
   },
   //pregunta = {'texto': unTexto, 'id': id, 'cantidadPorRespuesta': respuestas}
   //respuesta = {'textoRespuesta': respuesta, 'cantidad': cantVotos}
   obtenerIndicePregunta: function (id) {
-    return this.preguntas.findIndex(itemPregunta => itemPregunta.id === id);
+    return this.preguntas.findIndex(itemPregunta => itemPregunta.id == id);
   },
 
   //se guardan las preguntas

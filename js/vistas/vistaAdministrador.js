@@ -20,10 +20,6 @@ var VistaAdministrador = function (modelo, controlador, elementos) {
   this.modelo.preguntaActualizada.suscribir(function () {
     contexto.reconstruirLista();
   });
-
-  this.modelo.borrarPreguntas.suscribir(function () {
-    contexto.reconstruirLista();
-  });
 };
 
 

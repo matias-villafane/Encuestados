@@ -17,5 +17,8 @@ Controlador.prototype = {
   },
   borrarTodasPreguntas: function (){
     this.modelo.borrarTodasPreguntas();
+  },
+  agregarVoto: function (id,nombrePregunta, respuestaSeleccionada){
+    this.modelo.agregarVoto(id,nombrePregunta, respuestaSeleccionada);
   }
 };  
