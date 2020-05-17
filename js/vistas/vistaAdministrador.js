@@ -69,16 +69,18 @@ VistaAdministrador.prototype = {
     e.botonAgregarPregunta.click(function () {
       var value = e.pregunta.val();
       var respuestas = [];
-      //pregunta = {'texto': unTexto, 'id': id, 'cantidadPorRespuesta': respuestas}
-      //respuesta = {'textoRespuesta': respuesta, 'cantidad': cantVotos}
-      $('[name="option[]"]').each(function () {
-        //completar
-        if ($(this).val() != '') {
-          respuestas.push({ textoRespuesta: $(this).val(), cantidad: 0 });
-        }
-      });
-      contexto.limpiarFormulario();
-      contexto.controlador.agregarPregunta(value, respuestas);
+      if (!value && value !== '') {
+        $('[name="option[]"]').each(function () {
+          //completar
+          if ($(this).val() != '') {
+            respuestas.push({ textoRespuesta: $(this).val(), cantidad: 0 });
+          }
+        });
+        contexto.limpiarFormulario();
+        contexto.controlador.agregarPregunta(value, respuestas);
+      } else {
+        alert("Debe ingresar una pregunta");
+      }
     });
     //asociar el resto de los botones a eventos
     e.botonBorrarPregunta.click(function () {

@@ -62,10 +62,9 @@ Modelo.prototype = {
         }
       }
     }
-    this.preguntaActualizada.notificar();
+    this.guardar()
   },
-  //pregunta = {'texto': unTexto, 'id': id, 'cantidadPorRespuesta': respuestas}
-  //respuesta = {'textoRespuesta': respuesta, 'cantidad': cantVotos}
+
   obtenerIndicePregunta: function (id) {
     return this.preguntas.findIndex(itemPregunta => itemPregunta.id == id);
   },

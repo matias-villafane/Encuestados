@@ -11,15 +11,6 @@ var VistaUsuario = function(modelo, controlador, elementos) {
   this.modelo.preguntaAgregada.suscribir(function() {
     contexto.reconstruirLista();
   });
-
-  this.modelo.preguntaEliminada.suscribir(function() {
-    contexto.reconstruirLista();
-  });
-
-  this.modelo.preguntaActualizada.suscribir(function() {
-    contexto.reconstruirLista();
-    contexto.reconstruirGrafico();
-  });
 };
 
 VistaUsuario.prototype = {
@@ -61,13 +52,15 @@ VistaUsuario.prototype = {
       //completar
       //agregar a listaPreguntas un elemento div con valor "clave.textoPregunta", texto "clave.textoPregunta", id "clave.id"
       let pregunta = document.createElement('div');
-      $(listaPreguntas).append(pregunta);
+      
       $(pregunta).attr('id',clave.id);
       $(pregunta).attr('value',clave.textoPregunta);
       $(pregunta).text(clave.textoPregunta);
 
+      $(listaPreguntas).append(pregunta);
+
       var respuestas = clave.cantidadPorRespuesta;
-      contexto.mostrarRespuestas(listaPreguntas,respuestas, clave);
+      contexto.mostrarRespuestas(listaPreguntas, respuestas, clave);
     })
   },
 
@@ -87,14 +80,16 @@ VistaUsuario.prototype = {
   },
 
   agregarVotos: function(){
-    var contexto = this;
-    $('#preguntas').find('div').each(function(){
-        var nombrePregunta = $(this).attr('value');
-        var id = $(this).attr('id');
-        var respuestaSeleccionada = $('input[name=' + id + ']:checked').val();
-        $('input[name=' + id + ']').prop('checked',false);
+    let contexto = this;
+    let divs = $('#preguntas').find('div');
+      divs.each(function(){
+        let nombrePregunta = $(this).attr('value');
+        let id = $(this).attr('id');
+        let respuestaSeleccionada = $(`input[name=${id}]:checked`).val();
+        $(`input[name=${id}]`).prop('checked',false);
         contexto.controlador.agregarVoto(id,nombrePregunta,respuestaSeleccionada);
       });
+      contexto.reconstruirGrafico();
   },
 
   dibujarGrafico: function(nombre, respuestas){
