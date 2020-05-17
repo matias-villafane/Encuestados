@@ -16,6 +16,14 @@ var VistaAdministrador = function (modelo, controlador, elementos) {
   this.modelo.preguntaEliminada.suscribir(function () {
     contexto.reconstruirLista();
   });
+
+  this.modelo.preguntaActualizada.suscribir(function () {
+    contexto.reconstruirLista();
+  });
+
+  this.modelo.borrarPreguntas.suscribir(function () {
+    contexto.reconstruirLista();
+  });
 };
 
 
@@ -29,24 +37,22 @@ VistaAdministrador.prototype = {
   },
 
   construirElementoPregunta: function (pregunta) {
-    var contexto = this;
-    var nuevoItem;
+    //let contexto = this;
+    let nuevoItem;
     //completar
     //asignar a nuevoitem un elemento li con clase "list-group-item", id "pregunta.id" y texto "pregunta.textoPregunta"
-    nuevoItem = document.createElement("li");
+    nuevoItem = document.createElement('li');
     $(nuevoItem).addClass('list-group-item');
     $(nuevoItem).attr('id', pregunta.id);
-    //$(nuevoItem).text(pregunta.textoPregunta);
     $(nuevoItem).html($('.d-flex').html());
     //---------------------
-    //var interiorItem = $('.d-flex');
-    var interiorItem = $(nuevoItem);
-    var titulo = interiorItem.find('h5');
+    let interiorItem = $(nuevoItem);
+    let titulo = interiorItem.find('h5');
     titulo.text(pregunta.textoPregunta);
+
     interiorItem.find('small').text(pregunta.cantidadPorRespuesta.map(function (resp) {
       return " " + resp.textoRespuesta;
     }));
-    // nuevoItem.html($('.d-flex').html());
     return nuevoItem;
   },
 
@@ -84,7 +90,16 @@ VistaAdministrador.prototype = {
       contexto.limpiarFormulario();
       contexto.controlador.eliminarPregunta(id);
     });
-    //e.botonEditarPregunta.click();
+    e.botonEditarPregunta.click(function () {
+      let id = parseInt($('.list-group-item.active').attr('id'));
+      let preguntaActualizada = prompt("Ingrese pregunta actualizada")
+      contexto.limpiarFormulario();
+      contexto.controlador.actualizarPregunta(id, preguntaActualizada);
+    });
+    e.borrarTodo.click(function () {
+      contexto.limpiarFormulario(),
+      contexto.controlador.borrarTodasPreguntas();
+    });
   },
 
   limpiarFormulario: function () {

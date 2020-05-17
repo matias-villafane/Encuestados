@@ -11,5 +11,11 @@ Controlador.prototype = {
   },
   eliminarPregunta: function (id) {
     this.modelo.eliminarPregunta(id);
+  },
+  actualizarPregunta: function (id, pregunta){
+    this.modelo.actualizarPregunta(id,pregunta);
+  },
+  borrarTodasPreguntas: function (){
+    this.modelo.borrarTodasPreguntas();
   }
-};
+};  
