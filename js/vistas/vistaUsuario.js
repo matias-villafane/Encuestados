@@ -74,12 +74,12 @@ VistaUsuario.prototype = {
   //muestra respuestas
   mostrarRespuestas:function(listaPreguntas,respuestas, clave){
     respuestas.forEach (function(elemento) {
-      listaPreguntas.append($('<input>', {
+      $(listaPreguntas).append($('<input>', {
         type: 'radio',
         value: elemento.textoRespuesta,
         name: clave.id,
       }));
-      listaPreguntas.append($("<label>", {
+      $(listaPreguntas).append($("<label>", {
         for: elemento.textoRespuesta,
         text: elemento.textoRespuesta
       }));
