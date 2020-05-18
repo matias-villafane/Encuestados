@@ -69,7 +69,7 @@ VistaAdministrador.prototype = {
     e.botonAgregarPregunta.click(function () {
       var value = e.pregunta.val();
       var respuestas = [];
-      if (!value && value !== '') {
+      if (value && value !== '') {
         $('[name="option[]"]').each(function () {
           //completar
           if ($(this).val() != '') {
